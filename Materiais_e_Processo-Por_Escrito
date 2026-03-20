@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano Técnico de Reabilitação VSC - Master</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #1e293b;
+            --accent: #10b981;
+            --blue: #2563eb;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text: #334155;
+            --bg: #f8fafc;
+            --white: #ffffff;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* NAVEGAÇÃO */
+        nav {
+            position: sticky;
+            top: 0;
+            background: var(--primary);
+            z-index: 1000;
+            overflow-x: auto;
+            display: flex;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            scrollbar-width: none;
+        }
+        nav::-webkit-scrollbar { display: none; }
+
+        .tab-link {
+            padding: 20px 25px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-bottom: 4px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .tab-link.active {
+            color: var(--white);
+            border-bottom-color: var(--accent);
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* CONTEÚDO */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page-content { display: none; animation: slideIn 0.4s ease-out; }
+        .page-content.active { display: block; }
+
+        @keyframes slideIn { 
+            from { opacity: 0; transform: translateX(20px); } 
+            to { opacity: 1; transform: translateX(0); } 
+        }
+
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--primary); margin-top: 0; }
+        .section-header { 
+            border-left: 6px solid var(--accent); 
+            padding-left: 20px; 
+            margin-bottom: 40px;
+        }
+        
+        /* GRIDS E CARDS */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-bottom: 40px; }
+        .card { background: var(--white); border-radius: 12px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; height: 100%; }
+        
+        .img-box { width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 20px; height: 300px; background: #e2e8f0; position: relative; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .img-caption { position: absolute; bottom: 0; background: rgba(0,0,0,0.7); color: white; width: 100%; padding: 10px 15px; font-size: 0.9rem; }
+
+        /* ALERTAS E SEGURANÇA */
+        .danger-box { 
+            background: #7f1d1d; 
+            color: #fee2e2;
+            padding: 25px; 
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 2px solid var(--danger);
+        }
+        .danger-box h4 { color: white; margin-bottom: 10px; text-transform: uppercase; }
+
+        .tip-box { 
+            background: #f0fdf4; 
+            border: 1px solid #bbf7d0;
+            padding: 20px; 
+            border-radius: 10px; 
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        /* TABELAS */
+        .table-container { overflow-x: auto; background: var(--white); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 30px 0; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th { background: #f1f5f9; padding: 18px; text-align: left; font-family: 'Poppins'; font-size: 13px; color: var(--primary); border-bottom: 2px solid #e2e8f0; }
+        td { padding: 18px; border-bottom: 1px solid #f1f5f9; font-size: 15px; }
+        .unit-legend { font-size: 0.85rem; color: #64748b; font-style: italic; padding: 10px; border-top: 1px solid #eee; }
+
+        /* LISTAS DE PASSOS */
+        .step-list { list-style: none; padding: 0; }
+        .step-item { display: flex; gap: 15px; margin-bottom: 20px; align-items: flex-start; }
+        .step-number { background: var(--primary); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 700; }
+
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; background: #e2e8f0; color: #475569; margin-bottom: 10px; text-transform: uppercase; }
+        .badge-danger { background: var(--danger); color: white; }
+        .badge-blue { background: var(--blue); color: white; }
+
+        .footer-note { border-top: 2px dashed #e2e8f0; padding-top: 15px; margin-top: 20px; font-size: 0.9rem; color: #475569; }
+
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } .img-box { height: 250px; } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="tab-link active" onclick="openTab(event, 'p1')">Segurança</div>
+    <div class="tab-link" onclick="openTab(event, 'p2')">1. Preparação</div>
+    <div class="tab-link" onclick="openTab(event, 'p3')">2. Fachada (6 Passos)</div>
+    <div class="tab-link" onclick="openTab(event, 'p4')">3. Térmico & Capoto</div>
+    <div class="tab-link" onclick="openTab(event, 'p5')">4. Acústico & Solar</div>
+    <div class="tab-link" onclick="openTab(event, 'p6')">Resumo Consolidado</div>
+</nav>
+
+<div class="container">
+
+    <!-- PÁGINA 0: SEGURANÇA -->
+    <div id="p1" class="page-content active">
+        <div class="section-header">
+            <div class="badge badge-danger">Crítico</div>
+            <h2>Segurança e Riscos Químicos</h2>
+            <p>Análise de perigos baseada nas Fichas de Dados de Segurança (SDS).</p>
+        </div>
+
+        <div class="danger-box">
+            <h4><i class="fa-solid fa-triangle-exclamation"></i> Perigos Identificados</h4>
+            <ul>
+                <li><strong>Sikagard-700 S:</strong> Líquido inflamável (H226). Altamente perigoso se inalado em espaços com pouco vento. Pode ser mortal por ingestão e penetração nas vias respiratórias (H304).</li>
+                <li><strong>Lava Telhas Grouht (Puro):</strong> Agente corrosivo extremo. Causa queimaduras químicas imediatas em contacto com a pele e lesões oculares irreversíveis se atingir os olhos durante a pulverização.</li>
+                <li><strong>Trabalho em Altura:</strong> Risco crítico de queda. Uso obrigatório de arnês se não houver guarda-corpos em andaimes certificados.</li>
+            </ul>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h3>Equipamento de Proteção Individual (EPI) - Obrigatório com Grouht</h3>
+                <ul class="step-list">
+                    <li class="step-item"><i class="fa-solid fa-mask-ventilator"></i> <strong>Proteção Respiratória:</strong> Máscara com filtros (pre. A2P3 e de recurso, FP2 com respiro) para vapores de solventes e aerossóis químicos.</li>
+                    <li class="step-item"><i class="fa-solid fa-glasses"></i> <strong>Proteção Ocular:</strong> Óculos panorâmicos estanques (Goggles) para evitar névoas de Grout.</li>
+                    <li class="step-item"><i class="fa-solid fa-mitten"></i> <strong>Proteção Cutânea:</strong> Luvas de nitrilo de cano longo e fato de proteção química Tipo 5/6 (recurso fato descartável de pintor).</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="img-box">
+                    <img src="https://images.unsplash.com/photo-1599420186946-7b6fb4e297f0?q=80&w=1000&auto=format&fit=crop" alt="EPI Segurança">
+                    <div class="img-caption">Uso obrigatório de proteção respiratória e ocular total</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA 1: PREPARAÇÃO -->
+    <div id="p2" class="page-content">
+        <div class="section-header">
+            <h2>Fase de Descontaminação Radical</h2>
+            <p>Estratégia diferenciada por exposição solar.</p>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h3>Ação Biocida de Choque</h3>
+                <div class="step-list">
+                    <div class="step-item">
+                        <div class="step-number">!</div>
+                        <div style="color: var(--danger); font-weight: bold;">Fachada Poente: Aplicar Grout SEM DILUIÇÃO. A saturação biológica nesta zona exige concentração total para morte radicular de líquenes.</div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div><strong>Pulverização:</strong> Aplicar o produto (Puro na Fachada Poente, Diluído a 1/2 nas outras ou Líxivia Doméstica sem diluiçao juntando umas GOTAS de Fairy). Pode ser apalicado ,em dias de chuva fraca. </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div><strong>Reação:</strong> Deixar atuar 48h sem lavagem.</div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div><strong>Lavagem:</strong> Jato de água (140 bar) até deixar de "sair" espuma.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tarefa</th>
+                                <th>Custo Mat. / 10 m²</th>
+                                <th>HH / 10 m²</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Pulverização (Grout/Lixívia)</td><td>~18.00 € (Puro)</td><td>1.5</td></tr>
+                            <tr><td>Lavagem Mecânica Jato</td><td>-</td><td>1.0</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="unit-legend">Legenda: HH = Homem-Hora; Valores para cada 10 metros quadrados.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <i class="fa-solid fa-lightbulb"></i> <strong>Hipótese de Otimização:</strong> Se optar por uma tinta de acabamento de elevada qualidade (Siloxânica de topo pref. ou CIN de Acabamento de Fachadas de Topo), respirável mas totalmente impermeável à água líquida, poderá suprimir o Passo 3 (Hidrofugação) na fase seguinte de 6 passos . Nestas condições, o Passo 4 (Primário) seria aplicado apenas localmente e o Passo 5 (Fundo) seria eliminado, avançando diretamente para o Passo 6 (Acabamento).
+        </div>
+    </div>
+
+    <!-- PÁGINA 2: FACHADA EM 6 PASSOS -->
+    <div id="p3" class="page-content">
+        <div class="section-header">
+            <h2>Metodologia de Fachada (6 Passos Técnicos)</h2>
+            <p>Recuperação de estanqueidade e proteção siloxânica.</p>
+        </div>
+
+        <div class="step-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <div class="card">
+                <div class="step-number">1</div>
+                <h3>Sondagem e Batimento</h3>
+                <p>Identificação e remoção de crostas soltas.</p>
+            </div>
+            <div class="card">
+                <div class="step-number">2</div>
+                <h3>Tratamento de Fissuras</h3>
+                <p><strong>Fissuras Capilares <3mm:</strong> Aquaplast Fibra : após 2 dias de sol e noites acima dos 8ºC e secgaem com mais 1 a 2 dias nas condições anteriores .</p>
+                <p><strong>Fissuras >3mm:</strong> MS Polymer Quilosa/Soudal/Sika/Ceys.</p>
+            </div>
+            <div class="card" style="border: 2px dashed #94a3b8;">
+                <div class="step-number">3</div>
+                <h3>Hidrofugação Localizada</h3>
+                <p>Sikagard-700 S ou "AQUA PROTECT Hidrorrepelente - Pavimentos Porosos". (Opcional se usar tinta de topo referida anteriormente).</p>
+                <p>"CRÍTICO : Juntar +2 dias de sol e noites acima dos 8ºC para impregnar bem e consolidar, senão efeito perde-se".</p>
+            </div>
+            <div class="card">
+                <div class="step-number">4</div>
+                <h3>Primário Consolidação/Adesão</h3>
+                <p>Aplicação localizada (ou total se o suporte ESTIVER pulverulento).</p>
+            </div>
+            <div class="card" style="border: 2px dashed #94a3b8;">
+                <div class="step-number">5</div>
+                <h3>Pintura de Fundo</h3>
+                <p>1ª Demão de "Cinoxano" (base química SIKAgard/Quilosa) ou "Cinolite". (Suprimível em esquema de alta performance do passo 2).</p>
+            </div>
+            <div class="card">
+                <div class="step-number">6</div>
+                <h3>Acabamento Impermeável</h3>
+                <p>1 a 2 demãos puras de tinta de elevada performance, de pref. CIN - Novatex HD podendo-se pensar na Siloxânica*</p>
+                <p>Cumprir escrupulosamente o referido na embalagem</p>
+                <p>* Se a parede tem problemas de humidade que vem de dentro (paredes que "suam"): mantém o sistema Cinoxano, pois o Novatex HD/Cinoflex pode acabar por ganhar bolhas devido à pressão do vapor de água</p>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Intervenção</th>
+                        <th>Custo Mat. / 10 m²</th>
+                        <th>HH / 10 m²</th>
+                        <th>Material</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Tratamento Fissuras Capilares</td><td>~12.00 €</td><td>1.5</td><td>Aquaplast Fibra</td></tr>
+                    <tr><td>Esquema Pintura (Otimizado)</td><td>~95.00 €</td><td>2.5</td><td>CIN Cinoxano (Alta Gama)</td></tr>
+                </tbody>
+            </table>
+            <div class="unit-legend">Unidade: 10 m². Esforço reduzido na pintura se avançar direto para acabamento.</div>
+        </div>
+    </div>
+
+    <!-- PÁGINA 3: TÉRMICO & CAPOTO -->
+    <div id="p4" class="page-content">
+        <div class="section-header">
+            <div class="badge badge-blue">Térmico Estratégico</div>
+            <h2>Alternativas de Isolamento de Parede</h2>
+            <p>Comparação entre recuperação de fachada vs aplicação de ETICS.</p>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h3>Opção A: Recuperação Técnica (Flipping)</h3>
+                <p>Foco na placa (XPS) e pintura técnica das paredes.</p>
+                <ul class="step-list">
+                    <li><strong>Investimento Parede:</strong> Baixo.</li>
+                    <li><strong>Estética:</strong> Mantém textura "carapinha".</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Opção B: Sistema Capoto (ETICS)</h3>
+                <p>Aplicação de placas de **XPS de 30mm** sobre a fachada existente.</p>
+                <ul class="step-list">
+                    <li><strong>Investimento Parede:</strong> Elevado.</li>
+                    <li><strong>Benefício:</strong> Eliminação total de pontes térmicas.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Solução para Paredes</th>
+                        <th>Custo Mat. / 10 m²</th>
+                        <th>HH / 10 m²</th>
+                        <th>Performance Térmica</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #f8fafc;">
+                        <td>Recuperação + Pintura (Standard)</td>
+                        <td>~140.00 €</td>
+                        <td>7.0</td>
+                        <td>Média (Caixa de ar)</td>
+                    </tr>
+                    <tr style="background: #eff6ff; font-weight: bold;">
+                        <td>Sistema Capoto (XPS 30mm)</td>
+                        <td>~280.00 €</td>
+                        <td>12.0</td>
+                        <td>Muito Alta</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="unit-legend">Unidade: 10 m². O custo do Capoto inclui: Placas XPS, Argamassa de colagem/barramento, Rede de fibra de vidro e Revestimento final.</div>
+        </div>
+    </div>
+
+    <!-- PÁGINA 5: ACÚSTICO E SOLAR -->
+    <div id="p5" class="page-content">
+        <div class="section-header">
+            <h2>Acústica e Energia</h2>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <h3>Acústica (Ruído Industrial)</h3>
+                <p>Janela exterior + Vidro Acústico. 450-650 € / unidade | Alumínio (lacado ?) e vidro laminado (ex: 4+4mm ou 6+4mm com película acústica).</p>
+                <p>Dica: Garante que o espaço entre as duas janelas (a câmara de ar) tem pelo menos 10 a 20 cm. Quanto maior o espaço de ar entre os dois sistemas de caixilharia, melhor o amortecimento das baixas frequências (ruído de tráfego pesado).</p>
+            </div>
+            <div class="card">
+                <h3>Solar Fotovoltaico</h3>
+                <p>reforço para 4-6 kWp a 45º (Otimização Inverno). ~3.500,00 € Cliente Final [2.000,00 € ][.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA 6: CONSOLIDADO -->
+    <div id="p6" class="page-content">
+        <div class="section-header">
+            <h2>Resumo Comparativo de Investimento (Base 10 m²)</h2>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Intervenção</th>
+                        <th>Mat. / 10 m²</th>
+                        <th>HH / 10 m²</th>
+                        <th>Observações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Térmico Cobertura (XPS 40mm)</td><td>~115.00 €</td><td>4.5</td><td>Inadiável</td></tr>
+                    <tr><td>Fachada: Pintura Otimizada (Topo)</td><td>~125.00 €</td><td>5.0</td><td>Se a base for estável</td></tr>
+                    <tr style="border-top: 2px solid var(--blue);">
+                        <td>Fachada: Sistema Capoto (XPS)</td>
+                        <td>~280.00 €</td>
+                        <td>12.0</td>
+                        <td>Alteração estética total</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card" style="background: var(--primary); color: white; border: none;">
+            <h3>Decisão Estratégica VSC</h3>
+            <p>Se o objetivo for "Resolver no Médio Prazo", a Pintura Otimizada com tinta de topo é o melhor ROI. Se o objetivo for "Longo Prazo", aplicar todo o sistema é a melhor solução, e após uns 6 a 7 anos, aplicar nova demão de hidrorepelente, desta feita aquoso como o sikagard 703W (não o 700S)</p>
+            <p></p>
+            <p>Telhado e Pátio</p>
+  	        <p>Estes já passaram pela "Fase de Descontaminação Radical" conforme recomendado para a fachada poente, somando nno telhado as remoções intensivas de elevadas quantidades de liquens, musgos e outros.</p>
+            <p>Mantedo-o sem proteção, em menos de 10 anos o telahdo ficará igual ao que já esteve . Somando proteção de algo como o "SIKA 700S" [7 a 12 anos isento de problemas] e [SIKA 703S no pátio] ou usando nos dois malha/fio de cobre [ 50 a 100 anos de proteção : exemplo o MOOSfree da CoTexx GmbH ] o resultado manter-se-á  evitando custos de dezenas de milhares de euros nas suas substituições parciais.</p>
+            <p></p>
+            <p>Fachada Poente e Muros Frontais da Casa</p>
+            <p>Estas tmabém já passaram pela tal "Fase de Descontaminação Radical", mas se mantidos assim, em menos de 2 a 4 anos voltaram ainda mais rápido ao estado que estavam : será novamente necessário fazer este processo que precisa de mão-de-obra intensiva].</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, pagecontent, tablinks;
+        pagecontent = document.getElementsByClassName("page-content");
+        for (i = 0; i < pagecontent.length; i++) {
+            pagecontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab-link");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+        window.scrollTo(0,0);
+    }
+</script>
+
+</body>
+</html>
